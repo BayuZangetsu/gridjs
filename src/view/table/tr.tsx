@@ -16,7 +16,7 @@ export function TR(props: {
 }) {
   const config = useConfig();
   const header = useSelector((state) => state.header);
-
+  let is_deleted = false;
   const getColumn = (cellIndex: number): TColumn => {
     if (header) {
       const cols = Header.leafColumns(header.columns);
@@ -40,22 +40,21 @@ export function TR(props: {
     if (props.children) {
       return props.children;
     }
-
+    const status_data = props.row.cells[0].data['is_deleted'].toString();
+    is_deleted = status_data == '1' ? true : false;
     return props.row.cells.map((cell: Cell, i) => {
       const column = getColumn(i);
-
       if (column && column.hidden) return null;
-
       return <TD key={cell.id} cell={cell} row={props.row} column={column} />;
     });
   };
-
+  const childrens = getChildren();
   return (
     <tr
-      className={classJoin(className('tr'), config.className.tr)}
+      className={classJoin(className('tr'), is_deleted ? 'gridjs-is_deleted' : config.className.tr)}
       onClick={handleClick}
     >
-      {getChildren()}
+      {childrens}
     </tr>
   );
 }

@@ -13,3 +13,8 @@
     border-bottom: 0;
   }
 }
+.gridjs-is_deleted {
+  text-decoration: line-through !important;
+  color: red !important;
+  text-decoration-color: red !important;
+}
